@@ -12,8 +12,8 @@ def bag_of_words(text):
     :returns: a Counter for a single document
     :rtype: Counter
     '''
-    
-    raise NotImplementedError
+
+    return Counter(text.split())
 
 # deliverable 1.2
 def aggregate_counts(bags_of_words):
@@ -27,7 +27,8 @@ def aggregate_counts(bags_of_words):
 
     counts = Counter()
     # YOUR CODE GOES HERE
-    
+    for bow in bags_of_words:
+        counts += bow
     return counts
 
 # deliverable 1.3
@@ -41,7 +42,9 @@ def compute_oov(bow1, bow2):
     :rtype: set
     '''
     
-    raise NotImplementedError
+    s1 = set(bow1)
+    s2 = set(bow2)
+    return s1 - s2
 
 # deliverable 1.4
 def prune_vocabulary(training_counts, target_data, min_counts):
@@ -54,8 +57,11 @@ def prune_vocabulary(training_counts, target_data, min_counts):
     :returns: list of words in pruned vocabulary
     :rtype: list of Counters, set
     '''
-    
-    raise NotImplementedError
+    vocab = set(e for e in training_counts if training_counts[e] >= min_counts)
+    new_target_data = []
+    for bow in target_data:
+        new_target_data.append(Counter(e for e in bow.elements() if e in vocab))
+    target_data = new_target_data
     
     return target_data, vocab
 
