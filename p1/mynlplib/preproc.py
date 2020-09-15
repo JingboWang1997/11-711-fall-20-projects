@@ -61,9 +61,8 @@ def prune_vocabulary(training_counts, target_data, min_counts):
     new_target_data = []
     for bow in target_data:
         new_target_data.append(Counter(e for e in bow.elements() if e in vocab))
-    target_data = new_target_data
     
-    return target_data, vocab
+    return new_target_data, vocab
 
 # deliverable 5.1
 def make_numpy(bags_of_words, vocab):

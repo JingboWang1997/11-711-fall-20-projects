@@ -21,8 +21,10 @@ def make_feature_vector(base_features,label):
     :rtype: dict
 
     '''
-
-    raise NotImplementedError
+    dict = {(label, OFFSET): 1}
+    for e in base_features:
+        dict[(label, e)] = base_features[e]
+    return dict
 
 # deliverable 2.2
 def predict(base_features,weights,labels):
@@ -36,8 +38,13 @@ def predict(base_features,weights,labels):
     :rtype: string, dict
 
     '''
-    
-    raise NotImplementedError
+    scores = {}
+    for l in labels:
+        score = 0.0
+        for f in base_features:
+            score += (weights[(l, f)] * base_features[f])
+        scores[l] = score + weights[(l, OFFSET)]
+    return argmax(scores), scores
 
 def predict_all(x,weights,labels):
     '''
