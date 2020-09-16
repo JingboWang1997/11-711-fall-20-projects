@@ -17,8 +17,8 @@ def build_linear(X_tr, Y_tr):
     :rtype: PyTorch model
     '''
     #change these
-    size1 = -1; raise NotImplementedError
-    size2 = -1; raise NotImplementedError
+    size1 = X_tr.shape[1]
+    size2 = len(set(Y_tr))
 
     model = torch.nn.Sequential()
     model.add_module("Linear",torch.nn.Linear(size1, size2, bias=True))
@@ -36,8 +36,13 @@ def log_softmax(scores):
     :returns: the softmax result
     :rtype: numpy array
     '''
-
-    raise NotImplementedError
+    res = np.zeros(scores.shape)
+    for i, s in enumerate(scores):
+        den = logsumexp(s)
+        for j, si in enumerate(s):
+            res[i, j] = logsumexp(si) - den
+            
+    return res
 
 # deliverable 5.4
 def nll_loss(logP, Y_tr):
@@ -50,8 +55,11 @@ def nll_loss(logP, Y_tr):
     :returns: the NLL loss
     :rtype: float
     '''
+    nlls = []
+    for i, yi in enumerate(Y_tr):
+        nlls.append(-logP[i][yi])
 
-    raise NotImplementedError
+    return np.mean(np.array(nlls))
 
 
 ######################### helper code

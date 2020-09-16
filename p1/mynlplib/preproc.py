@@ -26,7 +26,6 @@ def aggregate_counts(bags_of_words):
     '''
 
     counts = Counter()
-    # YOUR CODE GOES HERE
     for bow in bags_of_words:
         counts += bow
     return counts
@@ -75,8 +74,14 @@ def make_numpy(bags_of_words, vocab):
     :rtype: numpy array
     '''
     vocab = sorted(vocab)
+    
+    res = np.zeros((len(bags_of_words), len(vocab)))
 
-    raise NotImplementedError
+    for i, bow in enumerate(bags_of_words):
+        for j, v in enumerate(vocab):
+            res[i, j] = bow[v]
+
+    return res
 
 
 ### helper code
